@@ -75,7 +75,13 @@ Route::middleware(['auth', 'role:client'])->group(function () {
 
 });
 
-Route::post('/checkout', [App\Http\Controllers\CheckoutController::class, 'store']);
+use App\Http\Controllers\CheckoutController;
+
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+Route::get('/checkout', [CheckoutController::class, 'page'])
+    ->middleware('auth')
+    ->name('checkout.page');
 
 Route::post('/orders', [OrderController::class, 'store'])->middleware('auth');
 
@@ -103,6 +109,16 @@ use App\Http\Controllers\Admin\ReportController;
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin.reports');
+
+});
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/orders', [OrderController::class, 'index'])
+        ->name('orders');
+
+    Route::post('/order/store', [OrderController::class, 'store'])
+        ->name('order.store');
 
 });
 

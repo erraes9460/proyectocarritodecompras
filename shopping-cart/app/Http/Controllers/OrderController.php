@@ -5,9 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
+
+    // VER HISTORIAL DE COMPRAS
+    public function index()
+    {
+        $orders = Order::with('items')
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
+        return Inertia::render('Account/Orders', [
+            'orders' => $orders
+        ]);
+    }
+
+
+    // GUARDAR PEDIDO DESDE EL CARRITO
     public function store()
     {
         $cart = session('cart');

@@ -1,33 +1,31 @@
 <script setup>
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-
-const props = defineProps({
-  cart: Array,
-});
 </script>
 
 <template>
   <AuthenticatedLayout>
     <Head title="Mi cuenta" />
 
-    <div class="max-w-6xl mx-auto p-10">
-      <h1 class="text-3xl font-bold mb-6">Mi cuenta</h1>
+    <div class="max-w-6xl mx-auto p-8">
+      <h1 class="text-3xl font-bold mb-8">Mi cuenta</h1>
 
-      <div v-if="cart.length > 0" class="bg-yellow-100 p-4 rounded mb-6">
-        Tienes {{ cart.length }} productos pendientes en tu carrito.
-      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Compras -->
+        <Link href="/orders">
+          <div class="bg-white p-6 rounded shadow">
+            <h2 class="font-semibold">Compras</h2>
+            <p class="text-gray-600">Ver historial de pedidos</p>
+          </div>
+        </Link>
 
-      <div class="grid grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded shadow">
-          <h2 class="font-bold mb-2">Compras</h2>
-          <p>Ver historial de pedidos</p>
-        </div>
-
-        <div class="bg-white p-6 rounded shadow">
-          <h2 class="font-bold mb-2">Perfil</h2>
-          <p>Actualizar datos</p>
-        </div>
+        <!-- Perfil -->
+        <Link href="/profile">
+          <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+            <h2 class="text-lg font-semibold">Perfil</h2>
+            <p class="text-gray-600 mt-2">Actualizar datos</p>
+          </div>
+        </Link>
       </div>
     </div>
   </AuthenticatedLayout>
